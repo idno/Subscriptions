@@ -31,8 +31,8 @@
                                 foreach ($users as $user) {
                                     if (!empty($user->email) && $user->email != $owner->email && $user->notifications['subscriptions'] != 'none') {
                                         $newemail = clone $email;
-                                        $email->addTo($user->email);
-                                        $email->send();
+                                        $newemail->addTo($user->email);
+                                        $newemail->send();
                                     }
                                 }
                             }
