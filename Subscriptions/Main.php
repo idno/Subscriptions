@@ -25,14 +25,17 @@
                             $owner = $object->getOwner();
 
                             if ($users = User::get([], [], 9999)) {
-                                $email = new Email();
-                                $email->setSubject($object->getTitle());
-                                $email->setHTMLBodyFromTemplate('subscriptions/email', ['object' => $object, 'owner' => $owner]);
+                                //$email = new Email();
+                                //$email->setSubject($object->getTitle());
+                                //$email->setHTMLBodyFromTemplate('subscriptions/email', ['object' => $object, 'owner' => $owner]);
+						        $title = implode(' ', array_slice(explode(' ', $object->getTitle()), 0, 10));
                                 foreach ($users as $user) {
                                     if (!empty($user->email) && $user->email != $owner->email && $user->notifications['subscriptions'] != 'none') {
-                                        $newemail = clone $email;
-                                        $newemail->addTo($user->email);
-                                        $newemail->send();
+                                		$email = new Email();
+                                        $email->setSubject($title);
+                                        $email->setHTMLBodyFromTemplate('subscriptions/email', ['object' => $object, 'owner' => $owner]);
+                                        $email->addTo($user->email);
+                                        $email->send();
                                     }
                                 }
                             }
